@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>表单元素</title>
+  <meta charset="UTF-8">
+  <title>输入并提交网址</title>
 </head>
 <body>
-<form name="stuinfo" action="https://jx.xmflv.com/?url=" method="get"> <!--get会显示 post不会显示-->
-  <input type="text" name="userName" placeholder="请输入链接">
-  <input type="submit">
-  
-  
+<h1>输入网址</h1>
+<form>
+  <label for="url">请输入网址:</label>
+  <input type="text" id="url" name="url">
+  <button type="button" onclick="submitUrl()">提交</button>
+  <input type="reset">
 </form>
+
+<script>
+  function submitUrl() {
+    var urlInput = document.getElementById("url").value;
+    var url = "//z1.im1907.top/?jx=" + urlInput;
+    window.open(url, "_blank");
+  }
+</script>
 </body>
 </html>
