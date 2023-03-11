@@ -13,12 +13,60 @@
   <input type="reset">
 </form>
 
+<h2>输入记录</h2>
+<form action="">
+  <button type="button" onclick="clearUrls()">清除记录</button>
+</form>
+<ul id="urlList">
+</ul>
+
 <script>
   function submitUrl() {
     var urlInput = document.getElementById("url").value;
     var url = "//z1.im1907.top/?jx=" + urlInput;
     window.open(url, "_blank");
+
+    // 保存用户输入的记录到 localStorage 中
+    var urls = localStorage.getItem("urls");
+    if (!urls) {
+      urls = [];
+    } else {
+      urls = JSON.parse(urls);
+    }
+    urls.push(urlInput);
+    localStorage.setItem("urls", JSON.stringify(urls));
+
+    // 在用户界面上显示输入记录
+    var urlList = document.getElementById("urlList");
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(urlInput));
+    urlList.appendChild(li);
   }
+
+  function clearUrls() {
+    // 清除本地存储中的记录
+    localStorage.removeItem("urls");
+
+    // 清空用户界面上的记录列表
+    var urlList = document.getElementById("urlList");
+    while (urlList.firstChild) {
+      urlList.removeChild(urlList.firstChild);
+    }
+  }
+
+  // 页面加载完成后，将之前保存的输入记录显示到用户界面上
+  window.onload = function() {
+    var urls = localStorage.getItem("urls");
+    if (urls) {
+      urls = JSON.parse(urls);
+      var urlList = document.getElementById("urlList");
+      for (var i = 0; i < urls.length; i++) {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(urls[i]));
+        urlList.appendChild(li);
+      }
+    }
+  };
 </script>
 </body>
 </html>
